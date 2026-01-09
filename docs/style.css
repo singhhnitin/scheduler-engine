@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background-color: #f9fafb;
+}
+
+h1 {
+    color: #1f2937;
+}
+
+h2 {
+    margin-top: 30px;
+    color: #374151;
+}
+
+input {
+    margin: 5px;
+    padding: 6px;
+}
+
+button {
+    padding: 8px 12px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+pre {
+    background: #111827;
+    color: #e5e7eb;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 6px;
+}
