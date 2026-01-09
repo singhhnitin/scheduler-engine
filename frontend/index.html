@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scheduler Engine</title>
+
+    <!-- UI Styling -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Optimized Appointment & Resource Scheduler</h1>
+
+    <!-- ================= RESOURCE SECTION ================= -->
+    <section>
+        <h2>Add Resource</h2>
+        <input id="resId" placeholder="Resource ID (e.g. R1)">
+        <input id="resFrom" type="number" placeholder="Available From">
+        <input id="resTo" type="number" placeholder="Available To">
+        <br>
+        <button onclick="addResource()">Add Resource</button>
+    </section>
+
+    <!-- ================= APPOINTMENT SECTION ================= -->
+    <section>
+        <h2>Add Appointment</h2>
+        <input id="appId" placeholder="Appointment ID (e.g. A1)">
+        <input id="appStart" type="number" placeholder="Start Time">
+        <input id="appEnd" type="number" placeholder="End Time">
+        <input id="appDuration" type="number" placeholder="Duration">
+        <input id="appPriority" type="number" placeholder="Priority">
+        <br>
+        <button onclick="addAppointment()">Add Appointment</button>
+    </section>
+
+    <!-- ================= SCHEDULING SECTION ================= -->
+    <section>
+        <h2>Generate Schedule</h2>
+        <button id="generateBtn">Generate Schedule</button>
+    </section>
+
+    <!-- ================= OUTPUT ================= -->
+    <pre id="output">Output will appear here...</pre>
+
+    <!-- JS Logic -->
+    <script src="script.js"></script>
+</body>
+</html>
