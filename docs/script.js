@@ -1,46 +1,73 @@
-const API_BASE_URL = "https://scheduler-engine.onrender.com";
-const appointments = [];
-const resources = [];
+const BASE_URL = "https://scheduler-engine.onrender.com";
 
-document.getElementById("generateBtn").addEventListener("click", generateSchedule);
-async function generateSchedule() {
-    const output = document.getElementById("output");
+const output = document.getElementById("output");
+
+// ---------- ADD RESOURCE ----------
+function addResource() {
+    const id = document.getElementById("resId").value;
+    const from = Number(document.getElementById("resFrom").value);
+    const to = Number(document.getElementById("resTo").value);
+
+    fetch(`${BASE_URL}/schedule/resource`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            id: id,
+            availableFrom: from,
+            availableTo: to
+        })
+    })
+    .then(res => res.text())
+    .then(msg => {
+        output.textContent = msg;
+    })
+    .catch(err => {
+        output.textContent = "Error: " + err.message;
+    });
+}
+
+// ---------- ADD APPOINTMENT ----------
+function addAppointment() {
+    const id = document.getElementById("appId").value;
+    const start = Number(document.getElementById("appStart").value);
+    const end = Number(document.getElementById("appEnd").value);
+    const duration = Number(document.getElementById("appDuration").value);
+    const priority = Number(document.getElementById("appPriority").value);
+
+    fetch(`${BASE_URL}/schedule/appointment`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            id: id,
+            startTime: start,
+            endTime: end,
+            duration: duration,
+            priority: priority
+        })
+    })
+    .then(res => res.text())
+    .then(msg => {
+        output.textContent = msg;
+    })
+    .catch(err => {
+        output.textContent = "Error: " + err.message;
+    });
+}
+
+// ---------- GENERATE SCHEDULE ----------
+document.getElementById("generateBtn").addEventListener("click", () => {
     output.textContent = "Calling backend...";
 
-    try {
-        const response = await fetch(`${API_BASE_URL}/schedule`);
-
-        if (!response.ok) {
-            throw new Error("HTTP error " + response.status);
-        }
-
-        const data = await response.json();
-        output.textContent = JSON.stringify(data, null, 2);
-    } catch (error) {
-        output.textContent = "Error: " + error.message;
-    }
-}
-function addResource() {
-    const resource = {
-        id: document.getElementById("resId").value,
-        availableFrom: Number(document.getElementById("resFrom").value),
-        availableTo: Number(document.getElementById("resTo").value)
-    };
-
-    resources.push(resource);
-    document.getElementById("output").textContent =
-        "Resource added:\n" + JSON.stringify(resource, null, 2);
-}
-function addAppointment() {
-    const appointment = {
-        id: document.getElementById("appId").value,
-        startTime: Number(document.getElementById("appStart").value),
-        endTime: Number(document.getElementById("appEnd").value),
-        duration: Number(document.getElementById("appDuration").value),
-        priority: Number(document.getElementById("appPriority").value)
-    };
-
-    appointments.push(appointment);
-    document.getElementById("output").textContent =
-        "Appointment added:\n" + JSON.stringify(appointment, null, 2);
-}
+    fetch(`${BASE_URL}/schedule`)
+        .then(res => res.json())
+        .then(data => {
+            output.textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(err => {
+            output.textContent = "Error: " + err.message;
+        });
+});
