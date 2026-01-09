@@ -6,6 +6,7 @@ import com.scheduler.service.Resource;
 import com.scheduler.service.SchedulingService;
 
 import org.springframework.web.bind.annotation.*;
+@CrossOrigin(origins = "*")
 
 @RestController
 @RequestMapping("/schedule")
