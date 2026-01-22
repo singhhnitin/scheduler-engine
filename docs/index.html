@@ -3,46 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Scheduler Engine</title>
-
-    <!-- UI Styling -->
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <h1>Optimized Appointment & Resource Scheduler</h1>
 
-    <!-- ================= RESOURCE SECTION ================= -->
+<div class="container">
+    <h1>Optimized Scheduling Engine</h1>
+    <p class="subtitle">
+        Appointment & Resource Allocation with Analytics
+    </p>
+
     <section>
         <h2>Add Resource</h2>
-        <input id="resId" placeholder="Resource ID (e.g. R1)">
+        <input id="resId" placeholder="Resource ID">
         <input id="resFrom" type="number" placeholder="Available From">
         <input id="resTo" type="number" placeholder="Available To">
-        <br>
         <button onclick="addResource()">Add Resource</button>
     </section>
 
-    <!-- ================= APPOINTMENT SECTION ================= -->
     <section>
         <h2>Add Appointment</h2>
-        <input id="appId" placeholder="Appointment ID (e.g. A1)">
+        <input id="appId" placeholder="Appointment ID">
         <input id="appStart" type="number" placeholder="Start Time">
         <input id="appEnd" type="number" placeholder="End Time">
         <input id="appDuration" type="number" placeholder="Duration">
         <input id="appPriority" type="number" placeholder="Priority">
-        <br>
         <button onclick="addAppointment()">Add Appointment</button>
     </section>
 
-    <!-- ================= SCHEDULING SECTION ================= -->
     <section>
-        <h2>Generate Schedule</h2>
-        <button id="generateBtn">Generate Schedule</button>
+        <h2>Generate Optimized Schedule</h2>
+        <button class="primary" onclick="generateSchedule()">Generate</button>
     </section>
 
-    <!-- ================= OUTPUT ================= -->
-    <pre id="output">Output will appear here...</pre>
+    <section>
+        <h2>Result</h2>
+        <pre id="output">No schedule generated yet.</pre>
+    </section>
+</div>
 
-    <!-- JS Logic -->
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

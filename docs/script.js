@@ -1,73 +1,35 @@
-const BASE_URL = "https://scheduler-engine.onrender.com";
+const BASE_URL = "https://scheduler-engine.onrender.com/schedule";
 
-const output = document.getElementById("output");
-
-// ---------- ADD RESOURCE ----------
 function addResource() {
-    const id = document.getElementById("resId").value;
-    const from = Number(document.getElementById("resFrom").value);
-    const to = Number(document.getElementById("resTo").value);
-
-    fetch(`${BASE_URL}/schedule/resource`, {
+    fetch(`${BASE_URL}/resource`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            id: id,
-            availableFrom: from,
-            availableTo: to
+            id: resId.value,
+            availableFrom: Number(resFrom.value),
+            availableTo: Number(resTo.value)
         })
-    })
-    .then(res => res.text())
-    .then(msg => {
-        output.textContent = msg;
-    })
-    .catch(err => {
-        output.textContent = "Error: " + err.message;
-    });
+    }).then(() => alert("Resource added"));
 }
 
-// ---------- ADD APPOINTMENT ----------
 function addAppointment() {
-    const id = document.getElementById("appId").value;
-    const start = Number(document.getElementById("appStart").value);
-    const end = Number(document.getElementById("appEnd").value);
-    const duration = Number(document.getElementById("appDuration").value);
-    const priority = Number(document.getElementById("appPriority").value);
-
-    fetch(`${BASE_URL}/schedule/appointment`, {
+    fetch(`${BASE_URL}/appointment`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            id: id,
-            startTime: start,
-            endTime: end,
-            duration: duration,
-            priority: priority
+            id: appId.value,
+            startTime: Number(appStart.value),
+            endTime: Number(appEnd.value),
+            duration: Number(appDuration.value),
+            priority: Number(appPriority.value)
         })
-    })
-    .then(res => res.text())
-    .then(msg => {
-        output.textContent = msg;
-    })
-    .catch(err => {
-        output.textContent = "Error: " + err.message;
-    });
+    }).then(() => alert("Appointment added"));
 }
 
-// ---------- GENERATE SCHEDULE ----------
-document.getElementById("generateBtn").addEventListener("click", () => {
-    output.textContent = "Calling backend...";
-
-    fetch(`${BASE_URL}/schedule`)
+function generateSchedule() {
+    fetch(BASE_URL)
         .then(res => res.json())
         .then(data => {
             output.textContent = JSON.stringify(data, null, 2);
-        })
-        .catch(err => {
-            output.textContent = "Error: " + err.message;
         });
-});
+}

@@ -1,41 +1,55 @@
 package com.scheduler.service;
 
-import com.scheduler.model.Appointment;
 import com.scheduler.engine.Scheduler;
+import com.scheduler.model.Appointment;
+import com.scheduler.repository.AppointmentRepository;
+import com.scheduler.repository.ResourceRepository;
 
-import java.util.ArrayList;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service
 public class SchedulingService {
 
-    private List<Appointment> appointments;
-    private List<Resource> resources;
+    private final AppointmentRepository appointmentRepo;
+    private final ResourceRepository resourceRepo;
 
-    public SchedulingService() {
-        appointments = new ArrayList<>();
-        resources = new ArrayList<>();
+    // Constructor-based dependency injection (BEST PRACTICE)
+    public SchedulingService(
+            AppointmentRepository appointmentRepo,
+            ResourceRepository resourceRepo
+    ) {
+        this.appointmentRepo = appointmentRepo;
+        this.resourceRepo = resourceRepo;
     }
 
+    // Save appointment to H2 database
     public void addAppointment(Appointment appointment) {
-        appointments.add(appointment);
+        appointmentRepo.save(appointment);
     }
 
+    // Save resource to H2 database
     public void addResource(Resource resource) {
-        resources.add(resource);
+        resourceRepo.save(resource);
     }
 
+    // Cancel appointment
     public void cancelAppointment(String appointmentId) {
-        appointments.removeIf(a -> a.getId().equals(appointmentId));
+        appointmentRepo.deleteById(appointmentId);
     }
 
+    // Generate optimized schedule
     public Scheduler.ScheduleResult generateSchedule() {
-        resetResources();
-        return Scheduler.scheduleAppointments(appointments, resources);
-    }
 
-    private void resetResources() {
+        List<Appointment> appointments = appointmentRepo.findAll();
+        List<Resource> resources = resourceRepo.findAll();
+
+        // Reset resource availability before scheduling
         for (Resource r : resources) {
             r.setNextAvailableTime(r.getAvailableFrom());
         }
+
+        return Scheduler.scheduleAppointments(appointments, resources);
     }
 }
