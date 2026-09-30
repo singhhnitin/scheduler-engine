@@ -24,12 +24,12 @@ public class SchedulingService {
         this.resourceRepo = resourceRepo;
     }
 
-    // Save appointment to H2 database
+    // Save appointment to MongoDB
     public void addAppointment(Appointment appointment) {
         appointmentRepo.save(appointment);
     }
 
-    // Save resource to H2 database
+    // Save resource to MongoDB
     public void addResource(Resource resource) {
         resourceRepo.save(resource);
     }

@@ -1,9 +1,9 @@
 package com.scheduler.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document(collection = "appointments")
 public class Appointment {
 
     @Id
@@ -14,14 +14,13 @@ public class Appointment {
     private int duration;
     private int priority;
 
-    // NEW: required for walk-ins & fair ordering
+    // Used for fair ordering: same priority -> earlier arrival goes first
     private int arrivalTime;
 
-    // REQUIRED by JPA (DO NOT REMOVE)
+    // Needed so Spring Data can create objects when reading from MongoDB
     public Appointment() {
     }
 
-    // Existing constructor (kept working)
     public Appointment(String id, int startTime, int endTime,
                        int duration, int priority) {
         this.id = id;
@@ -32,7 +31,6 @@ public class Appointment {
         this.arrivalTime = startTime; // default arrival
     }
 
-    // NEW constructor for walk-ins / simulation
     public Appointment(String id, int startTime, int endTime,
                        int duration, int priority, int arrivalTime) {
         this.id = id;
@@ -43,31 +41,21 @@ public class Appointment {
         this.arrivalTime = arrivalTime;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public int getStartTime() {
-        return startTime;
-    }
+    public int getStartTime() { return startTime; }
+    public void setStartTime(int startTime) { this.startTime = startTime; }
 
-    public int getEndTime() {
-        return endTime;
-    }
+    public int getEndTime() { return endTime; }
+    public void setEndTime(int endTime) { this.endTime = endTime; }
 
-    public int getDuration() {
-        return duration;
-    }
+    public int getDuration() { return duration; }
+    public void setDuration(int duration) { this.duration = duration; }
 
-    public int getPriority() {
-        return priority;
-    }
+    public int getPriority() { return priority; }
+    public void setPriority(int priority) { this.priority = priority; }
 
-    public int getArrivalTime() {
-        return arrivalTime;
-    }
-
-    public void setArrivalTime(int arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
+    public int getArrivalTime() { return arrivalTime; }
+    public void setArrivalTime(int arrivalTime) { this.arrivalTime = arrivalTime; }
 }

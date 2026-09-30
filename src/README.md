@@ -48,7 +48,8 @@ This engine **automates scheduling decisions** using optimization logic and prov
 ### Architecture
 - Stateless optimization engine
 - REST API (Spring Boot)
-- Database-backed persistence
+- MongoDB-backed persistence
+- JWT-secured endpoints (`/auth/register`, `/auth/login`)
 - Frontend UI for interaction
 
 ---
@@ -59,7 +60,8 @@ This engine **automates scheduling decisions** using optimization logic and prov
 - Java 17
 - Spring Boot
 - REST APIs
-- JPA (Hibernate)
+- MongoDB (Spring Data MongoDB)
+- Spring Security + JWT (stateless authentication, BCrypt password hashing)
 
 **Algorithms & DSA**
 - Greedy scheduling
@@ -69,6 +71,7 @@ This engine **automates scheduling decisions** using optimization logic and prov
 **Deployment**
 - Docker
 - Render Cloud
+- GitHub Actions CI (build + tests with MongoDB on every push)
 
 ---
 
