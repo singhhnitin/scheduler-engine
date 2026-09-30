@@ -1,9 +1,9 @@
 package com.scheduler.service;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document(collection = "resources")
 public class Resource {
 
     @Id
@@ -13,11 +13,10 @@ public class Resource {
     private int availableTo;
     private int nextAvailableTime;
 
-    // ✅ REQUIRED by JPA
+    // Needed so Spring Data can create objects when reading from MongoDB
     public Resource() {
     }
 
-    // Optional convenience constructor (safe to keep)
     public Resource(String id, int availableFrom, int availableTo) {
         this.id = id;
         this.availableFrom = availableFrom;
@@ -25,35 +24,15 @@ public class Resource {
         this.nextAvailableTime = availableFrom;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public int getAvailableFrom() { return availableFrom; }
+    public void setAvailableFrom(int availableFrom) { this.availableFrom = availableFrom; }
 
-    public int getAvailableFrom() {
-        return availableFrom;
-    }
+    public int getAvailableTo() { return availableTo; }
+    public void setAvailableTo(int availableTo) { this.availableTo = availableTo; }
 
-    public void setAvailableFrom(int availableFrom) {
-        this.availableFrom = availableFrom;
-    }
-
-    public int getAvailableTo() {
-        return availableTo;
-    }
-
-    public void setAvailableTo(int availableTo) {
-        this.availableTo = availableTo;
-    }
-
-    public int getNextAvailableTime() {
-        return nextAvailableTime;
-    }
-
-    public void setNextAvailableTime(int nextAvailableTime) {
-        this.nextAvailableTime = nextAvailableTime;
-    }
+    public int getNextAvailableTime() { return nextAvailableTime; }
+    public void setNextAvailableTime(int nextAvailableTime) { this.nextAvailableTime = nextAvailableTime; }
 }
